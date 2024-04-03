@@ -12,12 +12,12 @@ class StackSpider(Spider):
     ]
 
     def parse(self, response):
-        questions = Selector(response).xpath('//div[@class="summary"]/h3')
+        questions = Selector(response).xpath('//*[@id="questions"]/div/div[2]/h3')
 
         for question in questions:
             item = StackItem()
             item['title'] = question.xpath(
-                'a[@class="question-hyperlink"]/text()').extract()[0]
+                'a[@class="s-link"]/text()').extract_first()
             item['url'] = question.xpath(
-                'a[@class="question-hyperlink"]/@href').extract()[0]
+                'a[@class="question-hyperlink"]/@href').extract_first()
             yield item
