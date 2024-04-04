@@ -4,7 +4,7 @@ from scrapy.selector import Selector
 from stack.items import StackItem
 
 
-class StackSpider(Spider):
+class StackSpider(Spider):s
     name = "stack"
     allowed_domains = ["stackoverflow.com"]
     start_urls = [
