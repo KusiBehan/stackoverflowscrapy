@@ -3,14 +3,12 @@ from scrapy.selector import Selector
 
 from stack.items import StackItem
 
-
-class StackSpider(Spider):s
+class StackSpider(Spider):
     name = "stack"
     allowed_domains = ["stackoverflow.com"]
     start_urls = [
         "http://stackoverflow.com/questions?pagesize=50&sort=newest",
     ]
-
     def parse(self, response):
         questions = Selector(response).xpath('//*[@id="questions"]/div/div[2]/h3')
 
@@ -18,6 +16,6 @@ class StackSpider(Spider):s
             item = StackItem()
             item['title'] = question.xpath(
                 'a[@class="s-link"]/text()').extract_first()
-            item['url'] = question.xpath(
-                'a[@class="question-hyperlink"]/@href').extract_first()
+            item['url'] = "https://stackoverflow.com" + question.xpath(
+                'a[@class="s-link"]/@href').extract_first()
             yield item
